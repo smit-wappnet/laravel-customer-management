@@ -5,8 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Customer Management</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/> --}}
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script> 
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
@@ -92,7 +96,7 @@
                             All Customers
                         </div>
                         <div class="card-body">
-                            <table class="table">
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -106,29 +110,33 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($customers as $customer)
-                                        <tr>
-                                            <td>{{ $customer->id }}</td>
-                                            <td>{{ $customer->firstname }}</td>
-                                            <td>{{ $customer->middlename }}</td>
-                                            <td>{{ $customer->lastname }}</td>
-                                            <td>{{ $customer->mobile }}</td>
-                                            <td>{{ $customer->email }}</td>
-                                            <td>{{ $customer->city }}</td>
-                                            <td>
-                                                <a href="{{ route('edit', ['customer' => $customer->id]) }}"
-                                                    class="btn btn-primary">Edit</a>
-                                                <a href="{{ route('delete', ['customer' => $customer->id]) }}"
-                                                    class="btn btn-danger">Delete</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+            <script type="text/javascript">
+                $(function () {
+                   
+                  var table = $('#data-table').DataTable({
+                      processing: true,
+                      serverSide: true,
+                      ajax: "table",
+                      columns: [
+                          {data: 'id', name: 'id'},
+                          {data: 'firstname', name: 'firstname'},         
+                          {data: 'middlename', name: 'middlename'},
+                          {data: 'lastname', name: 'lastname'},         
+                          {data: 'mobile', name: 'mobile'},         
+                          {data: 'email', name: 'email'},         
+                          {data: 'city', name: 'city'},         
+                          {data: 'action', name: 'action'},         
+                      ]
+                  });
+                   
+                });
+              </script>
         @endif
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
